@@ -10,6 +10,8 @@ import cv2
 import numpy as np
 import os
 import shutil
+import ttach as tta
+
 
 def check_mkdir(dir_name):
     if not os.path.exists(dir_name):
@@ -58,4 +60,5 @@ if __name__ == "__main__":
 
     model = DeepLab(output_stride=16,class_num=opt.n_classes,pretrained=True,bn_momentum=0.1,freeze_bn=False).to(opt.device)
     model.load_state_dict(torch.load(weights_path))
+    tta_model = tta.SegmentationTTAWrapper(model, tta.aliases.d4_transform(), merge_mode='mean')
     predict(model, input_path,output_path, opt.n_classes, weights_path)
