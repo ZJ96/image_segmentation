@@ -54,11 +54,11 @@ def predict(model,image_file,  output_path, n_class, weights_path=None):
                 pbar.update(1)
 
 if __name__ == "__main__":
-    weights_path = "./checkpoints/u_net_1.pth"
+    weights_path = "./checkpoints/net_120.pth"
     input_path = "./data/test/images/"
     output_path = "./data/test/labels/"
 
     model = DeepLab(output_stride=16,class_num=opt.n_classes,pretrained=True,bn_momentum=0.1,freeze_bn=False).to(opt.device)
     model.load_state_dict(torch.load(weights_path))
-    tta_model = tta.SegmentationTTAWrapper(model, tta.aliases.d4_transform(), merge_mode='mean')
+    model = tta.SegmentationTTAWrapper(model, tta.aliases.d4_transform(), merge_mode='mean')
     predict(model, input_path,output_path, opt.n_classes, weights_path)

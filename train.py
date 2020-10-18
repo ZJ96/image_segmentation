@@ -40,7 +40,7 @@ def check_mkdir(dir_name):
 def save_model(model, model_save_path, current_epoch):
     if not os.path.exists(model_save_path):
         os.mkdir(model_save_path)
-    save_path = "u_net_" + str(current_epoch) + ".pth"
+    save_path = "net_" + str(current_epoch) + ".pth"
     save_path = os.path.join(model_save_path,save_path)
     torch.save(model.state_dict(), save_path)
 
@@ -68,7 +68,7 @@ def adjust_lr(optimizer,lr):
         param_group['lr'] = lr
 
 
-def train(epoch, train_dataLoader, optimizer, criterion, writer, global_step, WARMUP_STEP, TOTAL_STEP):
+'''def train1(epoch, train_dataLoader, optimizer, criterion, writer, global_step, WARMUP_STEP, TOTAL_STEP):
     print("*******  begin train  *******")
     model.train()
     all_loss = 0.0
@@ -89,9 +89,9 @@ def train(epoch, train_dataLoader, optimizer, criterion, writer, global_step, WA
             print("[batch_id   {},   avg_loss {:.8f}   ,  lr:{:.8f}] ".format(batch_id,avg_loss, lr))
         loss.backward()
         optimizer.step()
-    print("[***********************       all  avg_loss {:.8f}   ,  lr:{:.8f}]".format(avg_loss,lr))
-#the best one
-def train1(epoch, train_dataLoader, optimizer, criterion, writer, global_step, WARMUP_STEP, TOTAL_STEP):
+    print("[***********************       all  avg_loss {:.8f}   ,  lr:{:.8f}]".format(avg_loss,lr))'''
+
+def train(epoch, train_dataLoader, optimizer, criterion, writer, global_step, WARMUP_STEP, TOTAL_STEP):
     print("*******  begin train  *******")
     model.train()
     all_loss = 0.0
@@ -117,8 +117,8 @@ def train1(epoch, train_dataLoader, optimizer, criterion, writer, global_step, W
             postfix_message={"cur_loss":"%.6f"%(current_loss) , "avg_loss ":"%.6f"%(avg_loss) , "lr":"%.8f"%(lr)}
             pbar.set_postfix(log = postfix_message)
 
-            #writer.add_scalar("Train/ avg loss",avg_loss,global_step=(epoch-1)*len(train_dataLoader)+batch_id)
-            #writer.flush()
+            writer.add_scalar("Train/ avg loss",avg_loss,global_step=(epoch-1)*len(train_dataLoader)+batch_id)
+            writer.flush()
 
 
 def validation(val_dataLoader, criterion):
@@ -130,31 +130,31 @@ def validation(val_dataLoader, criterion):
     EVAL.reset()
     #Fwiou =FWIOU(opt.n_classes)
     with torch.no_grad():
-        #with tqdm(total=len(val_dataLoader), unit='batch') as pbar:
-        for batch_id, (data, target_mask) in enumerate(val_dataLoader):
-            data, target_mask = data.to(opt.device), target_mask.to(opt.device)
-            out = model(data)
-            loss = criterion(out, target_mask)
-            current_loss = loss.data.item()
-            all_loss += current_loss
+        with tqdm(total=len(val_dataLoader), unit='batch') as pbar:
+            for batch_id, (data, target_mask) in enumerate(val_dataLoader):
+                data, target_mask = data.to(opt.device), target_mask.to(opt.device)
+                out = model(data)
+                loss = criterion(out, target_mask)
+                current_loss = loss.data.item()
+                all_loss += current_loss
 
-            out = out.data.cpu().numpy()
-            target_mask = target_mask.data.cpu().numpy()
+                out = out.data.cpu().numpy()
+                target_mask = target_mask.data.cpu().numpy()
 
-            EVAL.add_batch(target_mask, out.argmax(axis=1))
+                EVAL.add_batch(target_mask, out.argmax(axis=1))
 
-            '''for ii in range(len(out)):
-                every_out = out[ii]
-                every_out = np.transpose(every_out, (1, 2, 0))   #chage to 256,256,8
-
-                predict = every_out.argmax(axis=2)
-                seg_img = np.zeros((256, 256), dtype=np.uint16)
-                for c in range(opt.n_classes):
-                    seg_img[predict == c] = c
-
-                every_target_mask = target_mask[ii]
-                Fwiou.update(predict=seg_img , gt=every_target_mask)'''
-            #pbar.update(1)
+                '''for ii in range(len(out)):
+                    every_out = out[ii]
+                    every_out = np.transpose(every_out, (1, 2, 0))   #chage to 256,256,8
+    
+                    predict = every_out.argmax(axis=2)
+                    seg_img = np.zeros((256, 256), dtype=np.uint16)
+                    for c in range(opt.n_classes):
+                        seg_img[predict == c] = c
+    
+                    every_target_mask = target_mask[ii]
+                    Fwiou.update(predict=seg_img , gt=every_target_mask)'''
+                pbar.update(1)
         print('[ validation ] [average loss:{}]'.format(all_loss/len(val_dataLoader)))
         PA = EVAL.Pixel_Accuracy()
         MPA = EVAL.Mean_Pixel_Accuracy()
@@ -169,8 +169,8 @@ def validation(val_dataLoader, criterion):
 if __name__ == "__main__":
     set_seed(1)
     check_mkdir(opt.tensorboard_path)
-    #writer =SummaryWriter(opt.tensorboard_path)
-    writer = None
+    writer =SummaryWriter(opt.tensorboard_path)
+    #writer = None
 
     train_data = Dataset(images_path=opt.images_path, labels_path= opt.labels_path,mode="train",
                          train_val_scale = opt.train_val_scale, use_augment=True)
@@ -186,7 +186,7 @@ if __name__ == "__main__":
     if torch.cuda.device_count() > 1:
         print("use many GPUS！")
         model = nn.DataParallel(model,device_ids=[0,1,2])
-    model.load_state_dict(torch.load("/data/zhangzhenghao/checkpoints/u_net_30.pth"))
+    #model.load_state_dict(torch.load("/data/zhujie/checkpoints/net_30.pth"))
     model.to(device=opt.device)
 
     criterion = torch.nn.CrossEntropyLoss().to(opt.device)
@@ -196,12 +196,12 @@ if __name__ == "__main__":
     #ptimizer = optim.Adam(model.parameters(), lr=opt.lr, weight_decay=opt.weight_decay)
     #optimizer= AdamW(model.parameters(),lr=opt.lr, weight_decay=opt.weight_decay)
 
-    TOTAL_STEP = len(train_dataLoader)*opt.epoch + 100
+    TOTAL_STEP = len(train_dataLoader)*opt.epoch + 1
     WARMUP_RATIO = 0.1
     WARMUP_STEP = TOTAL_STEP * WARMUP_RATIO
 
-    global_step = len(train_dataLoader)*30
-    for epoch in range(31, opt.epoch + 1):
+    global_step = 0
+    for epoch in range(1, opt.epoch + 1):
         print("[----------------------------------epoch {} ---------------------------------]".format(epoch))
         train(epoch,train_dataLoader, optimizer, criterion,writer, global_step, WARMUP_STEP, TOTAL_STEP)
         global_step += len(train_dataLoader)
