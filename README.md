@@ -32,18 +32,18 @@ Download the weights from Baidu Yun
 - Cross-Entorpy loss
 
 ## Optimizer and lr_scheduler
-- We use the Nadam(Incorporating Nesterov Momentum into Adam [[Paper]](http://cs229.stanford.edu/proj2015/054_report.pdf)) as the optimizer.
+- We use the Nadam( Incorporating Nesterov Momentum into Adam [[Paper]](http://cs229.stanford.edu/proj2015/054_report.pdf) ) as the optimizer.
 - We use Warm Up and Cos for the lr_schedule
 
 ## Train
-- Before train, you should change the paramters in the file `opt.py`.
+- Before train, you should change the parameters in the file `opt.py`.
 - We train our model in 3 GPUs.
 ```bash
 python train.py
 ```
 
 ## Predict
-- Before predict, you should change the paramters in the file `predict.py`.
+- Before predict, you should change the parameters in the file `predict.py`.
 ```bash
 python predict.py
 ```
