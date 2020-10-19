@@ -1,12 +1,8 @@
 ## Requirements
-Python version 3.6
-
 PyTorch and Torchvision needs to be installed before running the scripts, together with `PIL` ,`scikit-image`and `opencv` for data-preprocessing and `tqdm` for showing the training progress. 
-
 what's more,tensorboard are used to analyze the loss decline.
-
 Finally,we use `ttach` for post processing.
-
+Python version 3.6
 ```bash
 pip install -r requirements.txt
 ```
