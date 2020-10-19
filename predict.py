@@ -53,6 +53,17 @@ def predict(model,image_file,  output_path, n_class, weights_path=None):
                     cv2.imwrite(os.path.join(output_path, img_name), save_img)
                 pbar.update(1)
 
+from collections import OrderedDict
+#use this method to load weights in single gpu
+def my_load_state_dict(model,weights_path):
+    weights = torch.load(weights_path)
+    new_weights =OrderedDict()
+    for k,v in weights.items():
+        k=k[7:]
+        new_weights[k] =v
+    model.load_state_dict(new_weights)
+    return model
+
 if __name__ == "__main__":
     weights_path = "./checkpoints/net_120.pth"
     input_path = "./data/test/images/"
@@ -60,5 +71,6 @@ if __name__ == "__main__":
 
     model = DeepLab(output_stride=16,class_num=opt.n_classes,pretrained=True,bn_momentum=0.1,freeze_bn=False).to(opt.device)
     model.load_state_dict(torch.load(weights_path))
+    #model = my_load_state_dict(model,weights_path)
     model = tta.SegmentationTTAWrapper(model, tta.aliases.d4_transform(), merge_mode='mean')
     predict(model, input_path,output_path, opt.n_classes, weights_path)

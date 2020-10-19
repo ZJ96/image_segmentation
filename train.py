@@ -67,30 +67,6 @@ def adjust_lr(optimizer,lr):
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
 
-
-'''def train1(epoch, train_dataLoader, optimizer, criterion, writer, global_step, WARMUP_STEP, TOTAL_STEP):
-    print("*******  begin train  *******")
-    model.train()
-    all_loss = 0.0
-    for batch_id, (data, target_img) in enumerate(train_dataLoader):
-        global_step += 1
-        lr = lr_function(global_step, WARMUP_STEP, TOTAL_STEP)
-        adjust_lr(optimizer, lr)
-        data, target_img = data.to(opt.device), target_img.to(opt.device)
-        optimizer.zero_grad()
-        out = model(data)
-
-        loss = criterion(out, target_img)
-
-        current_loss = loss.item()
-        all_loss += current_loss
-        avg_loss = all_loss / (batch_id + 1)
-        if batch_id % 100==0:
-            print("[batch_id   {},   avg_loss {:.8f}   ,  lr:{:.8f}] ".format(batch_id,avg_loss, lr))
-        loss.backward()
-        optimizer.step()
-    print("[***********************       all  avg_loss {:.8f}   ,  lr:{:.8f}]".format(avg_loss,lr))'''
-
 def train(epoch, train_dataLoader, optimizer, criterion, writer, global_step, WARMUP_STEP, TOTAL_STEP):
     print("*******  begin train  *******")
     model.train()
