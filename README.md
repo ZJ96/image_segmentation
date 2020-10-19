@@ -1,8 +1,9 @@
 ## Requirements
+Python version 3.6.
+
 PyTorch and Torchvision needs to be installed before running the scripts, together with `PIL` ,`scikit-image`and `opencv` for data-preprocessing and `tqdm` for showing the training progress. 
-what's more,tensorboard are used to analyze the loss decline.
-Finally,we use `ttach` for post processing.
-Python version 3.6
+
+what's more,tensorboard are used to analyze the loss decline.Finally,we use `ttach` for post processing.
 ```bash
 pip install -r requirements.txt
 ```
@@ -14,7 +15,7 @@ pip install --user -r requirements.txt
 ## Model Weights
 Download the weights from Baidu Yun
 链接:https://pan.baidu.com/s/159BZTja3AsS2X1JOOxLcrQ  密码:h60a
-(Because of the limited time, the weight was only trained to 90epoch. And got 66th in B List)
+(Because of the limited time, the weight was only trained to 90epoch. And got 59th in B List)
 
 ## Models and papers 
 - (**Deeplab V3+**) Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation [[Paper]](https://arxiv.org/abs/1802.02611)
