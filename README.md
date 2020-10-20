@@ -14,8 +14,11 @@ pip install --user -r requirements.txt
 
 ## Model Weights
 Download the weights from Baidu Yun
-链接:https://pan.baidu.com/s/159BZTja3AsS2X1JOOxLcrQ  密码:h60a
+
 (Because of the limited time, the weight was only trained to 90epoch. And got 60th in B List)
+
+Link:  https://pan.baidu.com/s/159BZTja3AsS2X1JOOxLcrQ   password:h60a
+
 
 ## Models and papers 
 - (**Deeplab V3+**) Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation [[Paper]](https://arxiv.org/abs/1802.02611)
