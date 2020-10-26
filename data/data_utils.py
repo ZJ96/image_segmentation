@@ -7,7 +7,8 @@ from PIL import Image, ImageOps, ImageFilter
 
 
 # 类别对应
-matches = [100, 200, 300, 400, 500, 600, 700, 800]
+matches = [101, 202, 303, 204, 205, 806, 807, 808, 409, 410, 511, 512, 613, 614, 715, 716, 817]
+matches_one = [100, 200, 300, 400, 500, 600, 700, 800]
 
 def get_predict_img_paths(images_path):
     res = []

@@ -39,14 +39,14 @@ Link:  https://pan.baidu.com/s/159BZTja3AsS2X1JOOxLcrQ   password:h60a
 - We use Warm Up and Cos for the lr_schedule
 
 ## Train
-- Before train, you should change the parameters in the file `opt.py`.
+- Before train, you should change the parameters in the file `config.py`.
 - We train our model in 3 GPUs.
 ```bash
 python train.py
 ```
 
 ## Predict
-- Before predict, you should change the parameters in the file `predict.py`.
+- Before predict, you should change the parameters in the file `config.py`.
 ```bash
 python predict.py
 ```

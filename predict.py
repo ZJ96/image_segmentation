@@ -1,7 +1,4 @@
-from models.U_Nets import *
 from models import DeepLab
-
-from opt import opt
 from data.dataset import *
 from tqdm import tqdm
 from torch.utils.data import DataLoader
@@ -9,29 +6,37 @@ import torch
 import cv2
 import numpy as np
 import os
-import shutil
 import ttach as tta
+from utils import check_new_mkdir
+from config import get_args
 
 
-def check_mkdir(dir_name):
-    if not os.path.exists(dir_name):
-        os.mkdir(dir_name)
-    else:
-        shutil.rmtree(dir_name)
-        os.mkdir(dir_name)
+#use this method to load weights in single gpu
+from collections import OrderedDict
+def my_load_state_dict(model,weights_path):
+    weights = torch.load(weights_path)
+    new_weights =OrderedDict()
+    for k,v in weights.items():
+        k=k[7:]
+        new_weights[k] =v
+    model.load_state_dict(new_weights)
+    return model
 
-def predict(model,image_file,  output_path, n_class, weights_path=None):
+
+
+def predict(model, args):
     print("*******  begin test  *******")
-    print("final results are going to the dir:  {}".format(output_path))
-    check_mkdir(output_path)
-    test_data = PredictData(image_file,n_classes=opt.n_classes)
-    test_dataLoader = DataLoader(test_data, opt.batch, shuffle=False, num_workers=opt.num_workers)
+    print("final results are going to the dir:  {}".format(args.test_output_path))
+
+    check_new_mkdir(args.test_output_path)
+    test_data = PredictData(args.test_input_path,n_classes=args.n_classes)
+    test_dataLoader = DataLoader(test_data, args.batch_size, shuffle=False, num_workers=8)
 
     model.eval()
     with torch.no_grad():
         with tqdm(total=len(test_dataLoader), unit='batch') as pbar:
             for batch_id, (data,index) in enumerate(test_dataLoader):
-                data= data.to(opt.device)
+                data= data.cuda()
                 out = model(data)
                 out  = out.data.cpu()
 
@@ -42,7 +47,7 @@ def predict(model,image_file,  output_path, n_class, weights_path=None):
                     #every_out = every_out.reshape((256, 256, n_class))
                     predict = every_out.argmax(axis=2)
                     seg_img = np.zeros((256, 256), dtype=np.uint16)
-                    for c in range(opt.n_classes):
+                    for c in range(args.n_classes):
                         seg_img[predict[:,:] == c] = c
                     seg_img = cv2.resize(seg_img, (256, 256), interpolation=cv2.INTER_NEAREST)
                     save_img = np.zeros((256, 256), dtype=np.uint16)
@@ -50,27 +55,17 @@ def predict(model,image_file,  output_path, n_class, weights_path=None):
                         for j in range(256):
                             save_img[i][j] = matches[int(seg_img[i][j])]
                     img_name = index[ii] + ".png"
-                    cv2.imwrite(os.path.join(output_path, img_name), save_img)
+                    cv2.imwrite(os.path.join(args.test_output_path, img_name), save_img)
                 pbar.update(1)
 
-from collections import OrderedDict
-#use this method to load weights in single gpu
-def my_load_state_dict(model,weights_path):
-    weights = torch.load(weights_path)
-    new_weights =OrderedDict()
-    for k,v in weights.items():
-        k=k[7:]
-        new_weights[k] =v
-    model.load_state_dict(new_weights)
-    return model
+
 
 if __name__ == "__main__":
-    weights_path = "./checkpoints/net_120.pth"
-    input_path = "./data/test/images/"
-    output_path = "./data/test/labels/"
+    args = get_args()
 
-    model = DeepLab(output_stride=16,class_num=opt.n_classes,pretrained=True,bn_momentum=0.1,freeze_bn=False).to(opt.device)
-    model.load_state_dict(torch.load(weights_path))
-    #model = my_load_state_dict(model,weights_path)
+    model = DeepLab(output_stride=16,class_num=args.n_classes,pretrained=True,bn_momentum=0.1,freeze_bn=False).cuda()
+    model.load_state_dict(torch.load(args.test_weights_path))
+    #model = my_load_state_dict(model,args.test_weights_path)
+
     model = tta.SegmentationTTAWrapper(model, tta.aliases.d4_transform(), merge_mode='mean')
-    predict(model, input_path,output_path, opt.n_classes, weights_path)
+    predict(model, args)

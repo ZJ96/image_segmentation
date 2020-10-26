@@ -38,8 +38,6 @@ def data_augment(x,y):
     return x,y
 
 
-
-
 class PredictData(data.Dataset):
     def __init__(self,images_path, n_classes = 8, transform=None):
         self.imgs =get_predict_img_paths(images_path)
