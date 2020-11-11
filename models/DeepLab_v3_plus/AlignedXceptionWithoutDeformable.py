@@ -1,17 +1,9 @@
-# -*- coding: utf-8 -*-
-# @Time    : 2018/9/20 10:41
-# @Author  : HLin
-# @Email   : linhua2017@ia.ac.cn
-# @File    : AlignedXceptionWithoutDeformable.py
-# @Software: PyCharm
-
 
 import math
-import logging
-#from torchsummary import summary
 import torch
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
+from ..scSE import SeModule
 
 
 class SeparableConv2d(nn.Module):
@@ -40,7 +32,6 @@ class SeparableConv2d(nn.Module):
 class Block(nn.Module):
     def __init__(self,in_filters, out_filters, reps=3, strides=1, start_with_relu=True, grow_first=True, dilation=1):
         '''
-
         :param in_filters:
         :param out_filters:
         :param reps:
@@ -68,6 +59,8 @@ class Block(nn.Module):
             rep.append(self.relu)
             rep.append(SeparableConv2d(out_filters, out_filters, 3, stride=1, bias=False, dilation=dilation))
             rep.append(nn.BatchNorm2d(out_filters))
+            #se
+            rep.append(SeModule(out_filters))
         else:
             rep.append(self.relu)
             rep.append(SeparableConv2d(in_filters, in_filters, 3, stride=1, bias=False, dilation=dilation))
@@ -108,7 +101,7 @@ class Xception(nn.Module):
     https://arxiv.org/pdf/1610.02357.pdf
     """
 
-    def __init__(self, output_stride, pretrained=True):
+    def __init__(self, output_stride=16, pretrained=True):
         super(Xception, self).__init__()
 
         if output_stride ==8:
@@ -171,7 +164,7 @@ class Xception(nn.Module):
         # do relu here
 
         self._init_weights()
-        if pretrained is not False:
+        if pretrained is True:
             self._load_xception_weight()
 
 
@@ -187,8 +180,9 @@ class Xception(nn.Module):
 
         # Middle flow
         x = self.block1(x)
-        low_level_features = x
         x = self.block2(x)
+        low_level_features = x
+
         x = self.block3(x)
 
         x = self.block4(x)
@@ -225,8 +219,7 @@ class Xception(nn.Module):
 
     def _load_xception_weight(self):
         print("Loading pretrained weights in Imagenet...")
-        pretrained_dict = model_zoo.load_url(url="http://data.lip6.fr/cadene/pretrainedmodels/xception-b5690688.pth",
-                                             model_dir="/data/linhua/VOCdevkit/")
+        pretrained_dict = model_zoo.load_url(url="http://data.lip6.fr/cadene/pretrainedmodels/xception-b5690688.pth")
         model_dict = self.state_dict()
         new_dict = {}
 
@@ -258,6 +251,7 @@ class Xception(nn.Module):
 
         model_dict.update(new_dict)
         self.load_state_dict(model_dict)
+        print("_load_xception_weight load success!!!")
 
         #------- init weights --------
     def _init_weights(self):
@@ -269,6 +263,8 @@ class Xception(nn.Module):
                 m.weight.data.fill_(1)
                 m.bias.data.zero_()
         #-----------------------------
+
+
 if __name__ == '__main__':
     model = Xception(output_stride=16, pretrained=False)
     # print(model.state_dict)
@@ -281,4 +277,3 @@ if __name__ == '__main__':
     print(torch.cuda.is_available())
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model =model.to(device)
-    #summary(model,(3, 512, 512))

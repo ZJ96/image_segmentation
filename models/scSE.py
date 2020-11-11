@@ -12,6 +12,7 @@ class sSE(nn.Module):
         q = self.norm(q)
         return U * q  # 广播机制
 
+
 class cSE(nn.Module):
     def __init__(self, in_channels):
         super().__init__()
@@ -27,6 +28,7 @@ class cSE(nn.Module):
         z = self.norm(z)
         return U * z.expand_as(U)
 
+
 class scSE(nn.Module):
     def __init__(self, in_channels):
         super().__init__()
@@ -38,11 +40,19 @@ class scSE(nn.Module):
         U_cse = self.cSE(U)
         return U_cse+U_sse
 
-if __name__ == "__main__":
-    bs, c, h, w = 10, 3, 64, 64
-    in_tensor = torch.ones(bs, c, h, w)
 
-    sc_se = scSE(c)
-    print("in shape:",in_tensor.shape)
-    out_tensor = sc_se(in_tensor)
-    print("out shape:", out_tensor.shape)
+class SeModule(nn.Module):
+    def __init__(self, in_size, reduction=4):
+        super(SeModule, self).__init__()
+        self.se = nn.Sequential(
+            nn.AdaptiveAvgPool2d(1),
+            nn.Conv2d(in_size, in_size // reduction, kernel_size=1, stride=1, padding=0, bias=False),
+            nn.BatchNorm2d(in_size // reduction),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(in_size // reduction, in_size, kernel_size=1, stride=1, padding=0, bias=False),
+            nn.BatchNorm2d(in_size),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        return x * self.se(x)

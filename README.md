@@ -42,7 +42,7 @@ Link:  https://pan.baidu.com/s/159BZTja3AsS2X1JOOxLcrQ   password:h60a
 - Before train, you should change the parameters in the file `config.py`.
 - We train our model in 3 GPUs.
 ```bash
-python train.py
+python main.py
 ```
 
 ## Predict

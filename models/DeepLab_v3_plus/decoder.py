@@ -1,8 +1,6 @@
-import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-#from torchsummary import summary
 from .ResNet import resnet101,resnet50
 from .sync_batchnorm.batchnorm import SynchronizedBatchNorm2d
 from .encoder import Encoder
@@ -68,7 +66,6 @@ class Decoder(nn.Module):
                 m.bias.data.zero_()
 
 
-
 class DeepLab(nn.Module):
     def __init__(self, output_stride, class_num, pretrained, bn_momentum=0.1, freeze_bn=False):
         super(DeepLab, self).__init__()
@@ -81,7 +78,6 @@ class DeepLab(nn.Module):
 
     def forward(self, input):
         x, low_level_features = self.Resnet_model(input)
-
         x = self.encoder(x)
         predict = self.decoder(x, low_level_features)
         output= F.interpolate(predict, size=input.size()[2:4], mode='bilinear', align_corners=True)

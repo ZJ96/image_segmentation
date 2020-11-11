@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 from .sync_batchnorm.batchnorm import SynchronizedBatchNorm2d
-from ..scSE import scSE
+from ..scSE import scSE,cSE,SeModule
 
 model_urls = {
     'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
@@ -27,7 +27,7 @@ class Bottleneck(nn.Module):
         self.relu = nn.ReLU(inplace=True)
         self.downsample = downsample
         self.stride = stride
-        #self.scse = scSE(planes * self.expansion)
+        self.se = SeModule(planes * self.expansion)
 
 
     def forward(self, x):
@@ -47,7 +47,7 @@ class Bottleneck(nn.Module):
         if self.downsample is not None:
             residual = self.downsample(x)
 
-        #out = self.scse(out)
+        out = self.se(out)
 
         out += residual
         out = self.relu(out)
@@ -85,9 +85,9 @@ class ResNet(nn.Module):
                                        bn_momentum=bn_momentum)
 
         self._init_weight()
-
         if pretrained:
             self._load_pretrained_model()
+
 
     def _make_layer(self, block, planes, blocks, stride=1, dilation=1, bn_momentum=0.1):
         downsample = None
@@ -96,7 +96,7 @@ class ResNet(nn.Module):
                 nn.Conv2d(self.inplanes, planes * block.expansion,
                           kernel_size=1, stride=stride, bias=False),
                 SynchronizedBatchNorm2d(planes * block.expansion, momentum=bn_momentum),
-                scSE(planes * block.expansion),
+                #SE(planes * block.expansion),
             )
 
         layers = []
@@ -133,14 +133,11 @@ class ResNet(nn.Module):
         # x = self.avgpool(x)
         # x = x.view(x.size(0), -1)
         # x = self.fc(x)
-
         return x, low_level_feat
 
     def _init_weight(self):
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
-                # n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
-                # m.weight.data.normal_(0, math.sqrt(2. / n))
                 torch.nn.init.kaiming_normal_(m.weight)
             elif isinstance(m, nn.BatchNorm2d):
                 m.weight.data.fill_(1)
@@ -149,18 +146,10 @@ class ResNet(nn.Module):
 
 
 def resnet101(bn_momentum=0.1, pretrained=False, output_stride=16):
-    """Constructs a ResNet-101 model.
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-    """
     model = ResNet(Bottleneck, [3, 4, 23, 3], bn_momentum, pretrained, output_stride,model_name="resnet101")
     return model
 
 def resnet50(bn_momentum=0.1, pretrained=False, output_stride=16):
-    """Constructs a ResNet-50 model.
-    Args:
-        pretrained (bool): If True, returns a model pre-trained on ImageNet
-    """
     model = ResNet(Bottleneck, [3, 4, 6, 3], bn_momentum, pretrained, output_stride,model_name="resnet50")
     return model
 

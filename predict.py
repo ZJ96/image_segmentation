@@ -23,7 +23,6 @@ def my_load_state_dict(model,weights_path):
     return model
 
 
-
 def predict(model, args):
     print("*******  begin test  *******")
     print("final results are going to the dir:  {}".format(args.test_output_path))
