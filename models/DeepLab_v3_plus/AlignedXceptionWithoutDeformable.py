@@ -60,7 +60,7 @@ class Block(nn.Module):
             rep.append(SeparableConv2d(out_filters, out_filters, 3, stride=1, bias=False, dilation=dilation))
             rep.append(nn.BatchNorm2d(out_filters))
             #se
-            rep.append(SeModule(out_filters))
+            #rep.append(SeModule(out_filters))
         else:
             rep.append(self.relu)
             rep.append(SeparableConv2d(in_filters, in_filters, 3, stride=1, bias=False, dilation=dilation))

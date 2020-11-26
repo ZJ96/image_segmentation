@@ -1,0 +1,657 @@
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/19  20:36:47 
+[ epoch  1 ]
+**train** [ avg_loss  3.27958775 ] , [ lr  0.00026467 ]
+**validation**   [average loss: 57.96807098 ],[PA1: 0.05158234], [MPA1: 0.02212228], [MIoU1: 0.01125237], [FWIoU1: 0.04444366]
+[ epoch  2 ]
+**train** [ avg_loss  2.46628082 ] , [ lr  0.00042154 ]
+epoch:2 , GOT the best average loss:2.4662808179855347
+**validation**   [average loss: 35.62176005 ],[PA1: 0.07977753], [MPA1: 0.10091549], [MIoU1: 0.01548499], [FWIoU1: 0.01990217]
+[ epoch  3 ]
+**train** [ avg_loss  2.71004081 ] , [ lr  0.00057698 ]
+**validation**   [average loss: 8892.73315430 ],[PA1: 0.23440094], [MPA1: 0.09363636], [MIoU1: 0.02090570], [FWIoU1: 0.06280016]
+[ epoch  4 ]
+**train** [ avg_loss  2.21288745 ] , [ lr  0.00073097 ]
+epoch:4 , GOT the best average loss:2.212887446085612
+**validation**   [average loss: 1183.19612630 ],[PA1: 0.03755493], [MPA1: 0.03969005], [MIoU1: 0.00660231], [FWIoU1: 0.01467314]
+[ epoch  5 ]
+**train** [ avg_loss  1.99626978 ] , [ lr  0.00088351 ]
+epoch:5 , GOT the best average loss:1.9962697823842366
+**validation**   [average loss: 59.25167052 ],[PA1: 0.19384308], [MPA1: 0.17219302], [MIoU1: 0.04909626], [FWIoU1: 0.09700879]
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  11:17:37 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  11:19:01 
+[ epoch  1 ]
+**train** [ avg_loss  2.70426106 ] , [ lr  0.00026467 ]
+epoch:1 , GOT the best average loss:2.704261064529419
+**validation**   [average loss: 2.77122625 ],[PA1: 0.12118835], [MPA1: 0.10000000], [MIoU1: 0.01211889], [FWIoU1: 0.01468668]
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:02:15 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:03:46 
+[ epoch  1 ]
+**train** [ avg_loss  2.76069466 ] , [ lr  0.00026467 ]
+epoch:1 , GOT the best average loss:2.760694662729899
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:09:04 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:17:44 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:19:38 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:20:51 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:21:05 
+[ epoch  1 ]
+**train** [ avg_loss  2.81902488 ] , [ lr  0.00026467 ]
+epoch:1 , GOT the best average loss:2.8190248807271323
+**validation**   [average loss: 2.78334093 ],[PA1: 0.10893707], [MPA1: 0.11140819], [MIoU1: 0.02410343], [FWIoU1: 0.04117544]
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:30:22 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  12:32:17 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  13:00:34 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  13:05:02 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  13:08:25 
+[ epoch  1 ]
+**train** [ avg_loss  2.81902488 ] , [ lr  0.00026467 ]
+epoch:1 , GOT the best average loss:2.8190248807271323
+**validation**   [average loss: 2.78334093 ],[PA1: 0.10893707], [MPA1: 0.11140819], [MIoU1: 0.02410343], [FWIoU1: 0.04117544]
+[ epoch  2 ]
+**train** [ avg_loss  2.22722912 ] , [ lr  0.00042154 ]
+epoch:2 , GOT the best average loss:2.227229118347168
+**validation**   [average loss: 2.75057077 ],[PA1: 0.14230042], [MPA1: 0.14182626], [MIoU1: 0.03526687], [FWIoU1: 0.05220696]
+[ epoch  3 ]
+**train** [ avg_loss  2.11010333 ] , [ lr  0.00057698 ]
+epoch:3 , GOT the best average loss:2.1101033290227256
+**validation**   [average loss: 9.52666028 ],[PA1: 0.26098785], [MPA1: 0.13758759], [MIoU1: 0.06974025], [FWIoU1: 0.11782172]
+[ epoch  4 ]
+**train** [ avg_loss  1.99833059 ] , [ lr  0.00073097 ]
+epoch:4 , GOT the best average loss:1.9983305931091309
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  13:18:53 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  13:19:38 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  13:20:08 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  13:53:46 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  13:55:02 
+[ epoch  1 ]
+**train** [ avg_loss  2.75170811 ] , [ lr  0.00026467 ]
+epoch:1 , GOT the best average loss:2.7517081101735434
+**validation**   [average loss: 2.79841757 ],[PA1: 0.10424347], [MPA1: 0.10339528], [MIoU1: 0.01860496], [FWIoU1: 0.02247541]
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0016  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  14:12:49 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  14:37:05 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  14:39:38 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  14:41:00 
+[ epoch  1 ]
+**train** [ avg_loss  2.69831061 ] , [ lr  0.00023158 ]
+epoch:1 , GOT the best average loss:2.698310613632202
+**validation**   [average loss: 2.74836850 ],[PA1: 0.17697144], [MPA1: 0.10605515], [MIoU1: 0.02344131], [FWIoU1: 0.04468957]
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:05:34 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:10:05 
+[ epoch  1 ]
+**train** [ avg_loss  3.33750319 ] , [ lr  0.00023158 ]
+**validation**   [average loss: 154.05891927 ],[PA1: 0.05250854], [MPA1: 0.02176505], [MIoU1: 0.00539609], [FWIoU1: 0.02104959]
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:13:37 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:15:26 
+[ epoch  1 ]
+**train** [ avg_loss  3.33750319 ] , [ lr  0.00023158 ]
+**validation**   [average loss: 154.05891927 ],[PA1: 0.05250854], [MPA1: 0.02176505], [MIoU1: 0.00539609], [FWIoU1: 0.02104959]
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:31:09 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:33:23 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:33:45 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:35:25 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:36:02 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:48:20 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  15:51:32 
+[ epoch  1 ]
+**train** [ avg_loss  2.83576298 ] , [ lr  0.00023158 ]
+epoch:1 , GOT the best average loss:2.8357629776000977
+**validation**   [average loss: 2.83751241 ],[PA1: 0.10735931], [MPA1: 0.10073419], [MIoU1: 0.01130322], [FWIoU1: 0.02520072]
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/20  16:22:58 
+model_name  :  DEEPLABV3+  
+epochs  :  200  
+batch_size  :  4  
+n_classes  :  17  
+images_path  :  /Users/zj/data/minidata/images  
+labels_path  :  /Users/zj/data/minidata/labels  
+data_augment  :  True  
+checkpoints_path  :  ./checkpoints  
+log_file_name  :  train_logs.log  
+lr_scheduler  :  poly  
+warmup_epoch  :  10  
+optimizer_lr  :  0.0014  
+optimizer_momentum  :  0.9  
+optimizer_weight_decay  :  0.0001  
+optimizer_nesterov  :  False  
+****** start train time ******:2020 11/22  11:13:15 
+[ epoch  1 ]
+**train** [ avg_loss  2.80927801 ] , [ lr  0.00023158 ]
+epoch:1 , GOT the best average loss:2.8092780113220215

@@ -1,10 +1,13 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from .ResNet import resnet101,resnet50
+from .ResNet import resnet101,resnet50,resnet152,resnet_se101
+#from .AlignedXceptionWithoutDeformable import Xception
+from .Xception import Xception
 from .sync_batchnorm.batchnorm import SynchronizedBatchNorm2d
 from .encoder import Encoder
 from ..scSE import scSE
+from time import time
 
 
 class Decoder(nn.Module):
@@ -69,7 +72,8 @@ class Decoder(nn.Module):
 class DeepLab(nn.Module):
     def __init__(self, output_stride, class_num, pretrained, bn_momentum=0.1, freeze_bn=False):
         super(DeepLab, self).__init__()
-        self.Resnet_model = resnet101(bn_momentum, pretrained)
+        #self.Resnet_model = resnet101(bn_momentum, pretrained)
+        self.Resnet_model = resnet_se101(bn_momentum, pretrained)
         self.encoder = Encoder(bn_momentum, output_stride)
         self.decoder = Decoder(class_num, bn_momentum)
         if freeze_bn:

@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.model_zoo as model_zoo
 from torch.nn import init
-from ..scSE import scSE,cSE
+from ..scSE import scSE,cSE,SeModule
 
 class SeparableConv2d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size=1, stride=1, padding=0, dilation=1, bias=True):
@@ -13,10 +13,15 @@ class SeparableConv2d(nn.Module):
 
         self.conv1 = nn.Conv2d(in_channels, in_channels, kernel_size, stride, padding, dilation, groups=in_channels,
                                bias=bias)
+        # extra BatchNomalization and ReLU
+        self.relu = nn.ReLU(inplace=True)
+        self.bn = nn.BatchNorm2d(in_channels)
         self.pointwise = nn.Conv2d(in_channels, out_channels, 1, 1, 0, 1, 1, bias=bias)
 
     def forward(self, x):
         x = self.conv1(x)
+        x = self.relu(x)
+        x = self.bn(x)
         x = self.pointwise(x)
         return x
 
@@ -47,17 +52,20 @@ class Block(nn.Module):
             rep.append(self.relu)
             rep.append(SeparableConv2d(in_filters, out_filters, 3, stride=1, padding=1, bias=False))
             rep.append(nn.BatchNorm2d(out_filters))
+            rep.append(SeModule(out_filters))
             filters = out_filters
 
         for i in range(reps - 1):
             rep.append(self.relu)
             rep.append(SeparableConv2d(filters, filters, 3, stride=1, padding=1, bias=False))
             rep.append(nn.BatchNorm2d(filters))
+            rep.append(SeModule(filters))
 
         if not grow_first:
             rep.append(self.relu)
             rep.append(SeparableConv2d(in_filters, out_filters, 3, stride=1, padding=1, bias=False))
             rep.append(nn.BatchNorm2d(out_filters))
+            rep.append(SeModule(out_filters))
 
         if not start_with_relu:
             rep = rep[1:]
@@ -100,26 +108,36 @@ class Xception(nn.Module):
 
         self.block1 = Block(64, 128, 2, 2, start_with_relu=False, grow_first=True)
         self.block2 = Block(128, 256, 2, 2, start_with_relu=True, grow_first=True)
-        self.scse1 = cSE(256)
+        self.scse1 = scSE(256)
         self.block3 = Block(256, 728, 2, 2, start_with_relu=True, grow_first=True)
 
         self.block4 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
         self.block5 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
         self.block6 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
         self.block7 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
-        self.scse2 = cSE(728)
+        self.scse2 = scSE(728)
 
         self.block8 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
         self.block9 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
         self.block10 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
         self.block11 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
-        self.scse3 = cSE(728)
+        self.scse3 = scSE(728)
 
+        self.block12 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
+        self.block13 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
+        self.block14 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
+        self.block15 = Block(728, 728, 3, 1, start_with_relu=True, grow_first=True)
+        self.scse4 = scSE(728)
 
-        self.block12 = Block(728, 1024, 2, 2, start_with_relu=True, grow_first=False)
+        self.block16 = Block(728, 1024, 2, 2, start_with_relu=True, grow_first=False)
 
         self.conv3 = SeparableConv2d(1024, 1536, 3, 1, 1)
         self.bn3 = nn.BatchNorm2d(1536)
+
+        # do relu here
+
+        self.conv34 =SeparableConv2d(1536,1536,3,1,1)
+        self.bn34 = nn.BatchNorm2d(1536)
 
         # do relu here
         self.conv4 = SeparableConv2d(1536, 2048, 3, 1, 1)
@@ -148,8 +166,17 @@ class Xception(nn.Module):
                 if 'pointwise' in k:
                     v = v.unsqueeze(-1).unsqueeze(-1)
                 model_dict[k] = v
-            else:
-                print(k)
+                if k.startswith('block11'):
+                    model_dict[k] = v
+                    model_dict[k.replace('block11', 'block12')] = v
+                    model_dict[k.replace('block11', 'block13')] = v
+                    model_dict[k.replace('block11', 'block14')] = v
+                    model_dict[k.replace('block11', 'block15')] = v
+                elif k.startswith('block12'):
+                    model_dict[k.replace('block12', 'block16')] = v
+                elif k.startswith('bn3'):
+                    model_dict[k] = v
+                    state_dict[k.replace('bn3', 'bn34')] = v
         state_dict.update(model_dict)
         self.load_state_dict(state_dict)
         print("load pretrained model sucesss!")
@@ -186,10 +213,20 @@ class Xception(nn.Module):
         x = self.scse3(x)
 
         x = self.block12(x)
+        x = self.block13(x)
+        x = self.block14(x)
+        x = self.block15(x)
+        x = self.scse4(x)
+
+        x = self.block16(x)
 
         #Exit flow
         x = self.conv3(x)
         x = self.bn3(x)
+        x = self.relu(x)
+
+        x = self.conv34(x)
+        x = self.bn34(x)
         x = self.relu(x)
 
         x = self.conv4(x)

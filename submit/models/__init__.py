@@ -1,0 +1,1 @@
+from .DeepLab_v3_plus.decoder import DeepLab

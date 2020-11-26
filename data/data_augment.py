@@ -1,9 +1,12 @@
 import numpy as np
 import random
-from skimage.filters import gaussian
-from PIL import Image, ImageOps
+from PIL import Image
 import cv2
 
+def clip(img, dtype, maxval):
+    return np.clip(img, 0, maxval).astype(dtype)
+
+#随机翻转，和随机旋转90度等等
 def rotate_bound(image,angle):
     if angle==90:
         out = Image.fromarray(image).transpose(Image.ROTATE_90)
@@ -14,7 +17,6 @@ def rotate_bound(image,angle):
     else:
         pass
     return np.array(out)
-
 def flip_and_rotate(x,y):
     flag = random.choice([1,2,3,4,5,6])
     if flag ==1:
@@ -31,65 +33,132 @@ def flip_and_rotate(x,y):
         pass
     return x,y
 
+#随机亮度，对比度增强
+def random_brightness(img, alpha=0.2):
+    return alpha * img
+def random_contrast(img, alpha = 0.2):
+    gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    gray = (3.0 * (1.0 - alpha) / gray.size) * np.sum(gray)
+    return alpha * img + gray
 
-def random_brightness(img):
-    if random.random() < 0.5:
-        return img
-    shift_value = 10
-    img = img.astype(np.float32)
-    shift = random.randint(-shift_value, shift_value)
-    img[:, :, :] += shift
-    img = np.around(img)
-    img = np.clip(img, 0, 255).astype(np.uint8)
+#模糊处理
+def blur(img, ksize=3):
+    return cv2.blur(img, (ksize, ksize))
+def median_blur(img, ksize=3):
+    return cv2.medianBlur(img, ksize)
+def motion_blur(img):
+    kernel = np.zeros((9, 9))
+    xs, ys = np.random.randint(0, kernel.shape[1]), np.random.randint(0, kernel.shape[0])
+    xe, ye = np.random.randint(0, kernel.shape[1]), np.random.randint(0, kernel.shape[0])
+    cv2.line(kernel, (xs, ys), (xe, ye), 1, thickness=1)
+    return cv2.filter2D(img, -1, kernel / np.sum(kernel))
+
+
+#各种   噪声  增强
+def gauss_noise(image, var=20):
+    row, col, ch = image.shape
+    mean = var
+    # var = 30
+    sigma = var**0.5
+    gauss = np.random.normal(mean,sigma,(row,col,ch))
+    gauss = gauss.reshape(row,col,ch)
+    gauss = (gauss - np.min(gauss)).astype(np.uint8)
+    return image.astype(np.int32) + gauss
+
+def salt_pepper_noise(image):
+    #todo
+    s_vs_p = 0.5
+    amount = 0.004
+    noisy = image
+    # Salt mode
+    num_salt = np.ceil(amount * image.size * s_vs_p)
+    coords = [np.random.randint(0, i - 1, int(num_salt))
+              for i in image.shape]
+    noisy[coords] = 255
+
+    # Pepper mode
+    num_pepper = np.ceil(amount * image.size * (1. - s_vs_p))
+    coords = [np.random.randint(0, i - 1, int(num_pepper))
+              for i in image.shape]
+    noisy[coords] = 0
+    return noisy
+
+def poisson_noise(image):
+    #todo
+    vals = len(np.unique(image))
+    vals = 2 ** np.ceil(np.log2(vals))
+    noisy = np.random.poisson(image * vals) / float(vals)
+    return noisy
+
+def speckle_noise(image):
+    #斑点噪声
+    row, col, ch = image.shape
+    gauss = np.random.randn(row,col,ch)
+    gauss = gauss.reshape(row,col,ch)
+    noisy = image + image * gauss
+    return noisy
+
+#通道 shuffle
+def channel_shuffle(img):
+    ch_arr = [0, 1, 2]
+    np.random.shuffle(ch_arr)
+    img = img[..., ch_arr]
     return img
 
+def shift_hsv(img, hue_shift =20, sat_shift =20, val_shift =20):
+    dtype = img.dtype
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2HSV).astype(np.int32)
+    h, s, v = cv2.split(img)
+    h = cv2.add(h, hue_shift)
+    h = np.where(h < 0, 255 - h, h)
+    h = np.where(h > 255, h - 255, h)
+    h = h.astype(dtype)
+    s = clip(cv2.add(s, sat_shift), dtype, 255 if dtype == np.uint8 else 1.)
+    v = clip(cv2.add(v, val_shift), dtype, 255 if dtype == np.uint8 else 1.)
+    img = cv2.merge((h, s, v)).astype(dtype)
+    img = cv2.cvtColor(img, cv2.COLOR_HSV2RGB)
+    return img
 
-def gaussion_data_augment(img):
-    if random.random() < 0.5:
-        sigma = random.random()*0.2
-        blurred_img = gaussian(np.array(img), sigma=sigma, multichannel=True)
-        blurred_img *= 255
-        return blurred_img.astype(np.uint8)
-    else:
-        return img
+def do_brightness_shift(image, alpha=0.125):
+    image = image + alpha
+    image = np.clip(image, 0, 1)
+    return image
 
-def mulit_scale_augment(img, mask):
-    if random.random() < 0.5:
-        return img,mask
-    base_size = 256
-    crop_size = 256
-    img,mask = Image.fromarray(img), Image.fromarray(mask)
 
-    # random scale (short edge)
-    short_size = random.randint(int(base_size * 1.0), int(base_size * 1.2))
-    w, h = img.size
-    if h > w:
-        ow = short_size
-        oh = int(1.0 * h * ow / w)
-    else:
-        oh = short_size
-        ow = int(1.0 * w * oh / h)
-    img = img.resize((ow, oh), Image.BILINEAR)
-    mask = mask.resize((ow, oh), Image.NEAREST)
-    # pad crop
-    if short_size < crop_size:
-        padh = crop_size - oh if oh < crop_size else 0
-        padw = crop_size - ow if ow < crop_size else 0
-        img = ImageOps.expand(img, border=(0, 0, padw, padh), fill=0)
-        mask = ImageOps.expand(mask, border=(0, 0, padw, padh), fill=800)
-    # random crop crop_size
-    w, h = img.size
-    x1 = random.randint(0, w - crop_size)
-    y1 = random.randint(0, h - crop_size)
-    img = img.crop((x1, y1, x1 + crop_size, y1 + crop_size))
-    mask = mask.crop((x1, y1, x1 + crop_size, y1 + crop_size))
+def do_brightness_multiply(image, alpha=1):
+    image = alpha*image
+    image = np.clip(image, 0, 1)
+    return image
 
-    img, mask = np.array(img) , np.array(mask)
-    return img, mask
+def do_gamma(image, gamma=1.0):
+    image = image ** (1.0 / gamma)
+    image = np.clip(image, 0, 1)
+    return image
+
 
 def all_augment(img,mask):
     img,mask = flip_and_rotate(img,mask)
-    img,mask = mulit_scale_augment(img,mask)
+
+    # if random.random() < 0.2:
+    #     gauss_noise(img,var=10)
+
+    # if random.random() <0.3:
+    #     median_blur(img)
+    #
+    # if random.random() < 0.3:
+    #     shift_hsv(img)
+
+    if random.random() < 0.3:
+        channel_shuffle(img)
+
+    if np.random.rand() < 0.5:
+        c = np.random.choice(3)
+        if c==0:
+            img = do_brightness_shift(img,np.random.uniform(-0.1,+0.1))
+        if c==1:
+            img = do_brightness_multiply(img,np.random.uniform(1-0.08,1+0.08))
+        if c==2:
+            img = do_gamma(img,np.random.uniform(1-0.08,1+0.08))
+        img = np.array(img,dtype=np.float32)
 
     return img,mask
-    # img = gaussion_data_augment(img)
