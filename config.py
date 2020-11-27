@@ -24,7 +24,7 @@ def get_args():
     parser.add_argument("--warmup-epoch", type=int, default=10, help="warmup epoch")
 
     #train parameters SGD
-    parser.add_argument("--optimizer-lr", type=float, default=0.0014 , help=" lr")
+    parser.add_argument("--optimizer-lr", type=float, default=0.002 , help=" lr")
     parser.add_argument("--optimizer-momentum", type=float, default=0.9,    help="sgd momentum")
     parser.add_argument("--optimizer-weight-decay", type=float, default=0.0001 , help="sgd weight decay")
     parser.add_argument("--optimizer-nesterov", type=bool, default= False,    help="sgd nesterov")

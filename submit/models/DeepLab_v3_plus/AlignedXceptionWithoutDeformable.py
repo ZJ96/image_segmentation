@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-# @Time    : 2018/9/20 10:41
-# @Author  : HLin
-# @Email   : linhua2017@ia.ac.cn
-# @File    : AlignedXceptionWithoutDeformable.py
-# @Software: PyCharm
-
 
 import math
 import torch
