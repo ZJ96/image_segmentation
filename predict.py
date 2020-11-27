@@ -10,7 +10,6 @@ import ttach as tta
 from utils import check_new_mkdir
 from config import get_args
 
-
 #use this method to load weights in single gpu
 from collections import OrderedDict
 def my_load_state_dict(model,weights_path):

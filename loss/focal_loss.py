@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+
 # --------------------------- BINARY LOSSES ---------------------------
 class BCE_FocalLoss(nn.Module):
     def __init__(self, alpha=0.25, gamma=2, weight=None, ignore_index=None):
